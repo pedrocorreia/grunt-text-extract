@@ -1,6 +1,6 @@
 /*
- * grunt-text-extract
- * https://github.com/pedrocorreia/text-extract
+ * grunt-text-grab
+ * https://github.com/pedrocorreia/text-grab
  *
  * Copyright (c) 2014 Pedro Correia
  * Licensed under the MIT license.
