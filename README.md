@@ -39,44 +39,56 @@ grunt.initConfig({
 
 #### options.pattern
 Type: `RegExp`
-Default value: ``
+Default value: none
 
-A Regular Expression that is used to find bits of text to extract on your files.
+A regular expression, as a string, that is used to find bits of text to extract from your files.
 
-#### options.punctuation
+#### options.exceptions
+Type: `Array`
+Default value: none
+
+An array of regular expressions, as strings, to exclude from the final output.
+
+#### options.exceptions
+Type: `Array`
+Default value: none
+
+An array of regular expressions, as strings, to exclude from the final output.
+
+#### options.templateStart
 Type: `String`
-Default value: `'.'`
+Default value: none
 
-A string value that is used to do something else with whatever else.
+A string that will be prepended to the output file. Can be empty.
+
+#### options.templateRow
+Type: `String`
+Default value: none
+
+This is the bit of the template that gets reapeated on each match. Must contain the ´%s´ symbol as the placeholder for grabbed chunks.
+
+#### options.templateEnd
+Type: `String`
+Default value: none
+
+A string that will be appended to the output file. Can be empty.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  text_grab: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example we'll be extracting from `style.css` all css class selectors with the exception of any containing the `exception` expression and writing them as an html table with single selector per row.
 
 ```js
 grunt.initConfig({
   text_grab: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      pattern: '\\.[a-zA-Z][a-zA-Z0-9-]+',
+      templateStart: '<table>\n',
+      templateRow: '<tr><td>%s</td></tr>\n',
+      templateEnd: '</table>\n',
+      exceptions: ['exception'],
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'tmp/css-classes.html': ['css/style.css'],
     },
   },
 });
