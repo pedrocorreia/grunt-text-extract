@@ -1,6 +1,6 @@
 # grunt-text-grab
 
-> Grab and extract text chunks from files using regular expressions and save them to several formats.
+> Grab and extract text chunks from files using regular expressions and save them to multiple formats.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
