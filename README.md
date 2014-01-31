@@ -1,6 +1,6 @@
-# grunt-text-extract
+# grunt-text-grab
 
-> The best Grunt plugin ever.
+> Grab and extract text chunks from files using regular expressions and save them to several formats.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.2`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-text-extract --save-dev
+npm install grunt-text-grab --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-text-extract');
+grunt.loadNpmTasks('grunt-text-grab');
 ```
 
-## The "text_extract" task
+## The "text_grab" task
 
 ### Overview
-In your project's Gruntfile, add a section named `text_extract` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `text_grab` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  text_extract: {
+  text_grab: {
     options: {
       // Task-specific options go here.
     },
@@ -37,46 +37,58 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.pattern
+Type: `RegExp`
+Default value: none
+
+A regular expression, as a string, that is used to find bits of text to extract from your files.
+
+#### options.exceptions
+Type: `Array`
+Default value: none
+
+An array of regular expressions, as strings, to exclude from the final output.
+
+#### options.exceptions
+Type: `Array`
+Default value: none
+
+An array of regular expressions, as strings, to exclude from the final output.
+
+#### options.templateStart
 Type: `String`
-Default value: `',  '`
+Default value: none
 
-A string value that is used to do something with whatever.
+A string that will be prepended to the output file. Can be empty.
 
-#### options.punctuation
+#### options.templateRow
 Type: `String`
-Default value: `'.'`
+Default value: none
 
-A string value that is used to do something else with whatever else.
+This is the bit of the template that gets reapeated on each match. Must contain the ´%s´ symbol as the placeholder for grabbed chunks.
+
+#### options.templateEnd
+Type: `String`
+Default value: none
+
+A string that will be appended to the output file. Can be empty.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example we'll be extracting from `style.css` all css class selectors with the exception of any containing the `exception` expression and writing them as an html table with single selector per row.
 
 ```js
 grunt.initConfig({
-  text_extract: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  text_extract: {
+  text_grab: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      pattern: '\\.[a-zA-Z][a-zA-Z0-9-]+',
+      templateStart: '<table>\n',
+      templateRow: '<tr><td>%s</td></tr>\n',
+      templateEnd: '</table>\n',
+      exceptions: ['exception'],
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'tmp/css-classes.html': ['css/style.css'],
     },
   },
 });
