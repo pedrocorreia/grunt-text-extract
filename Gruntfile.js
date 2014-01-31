@@ -29,21 +29,17 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    text_extract: {
-      default_options: {
-        options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+    text_grab: {
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!',
+          pattern: '\\.[a-zA-Z][a-zA-Z0-9-]+',
+          templateStart: '<table>\n',
+          templateRow: '<tr><td>%s</td></tr>\n',
+          templateEnd: '</table>\n',
+          exceptions: ['exception'],
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'tmp/custom_options': ['test/fixtures/test.css'],
         },
       },
     },
@@ -65,7 +61,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'text_extract', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'text_grab', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

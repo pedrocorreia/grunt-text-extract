@@ -17,14 +17,14 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-text-grab');
 ```
 
-## The "text_extract" task
+## The "text_grab" task
 
 ### Overview
-In your project's Gruntfile, add a section named `text_extract` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `text_grab` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  text_extract: {
+  text_grab: {
     options: {
       // Task-specific options go here.
     },
@@ -37,11 +37,11 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.pattern
+Type: `RegExp`
+Default value: ``
 
-A string value that is used to do something with whatever.
+A Regular Expression that is used to find bits of text to extract on your files.
 
 #### options.punctuation
 Type: `String`
@@ -56,7 +56,7 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  text_extract: {
+  text_grab: {
     options: {},
     files: {
       'dest/default_options': ['src/testing', 'src/123'],
@@ -70,7 +70,7 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  text_extract: {
+  text_grab: {
     options: {
       separator: ': ',
       punctuation: ' !!!',
