@@ -1,6 +1,6 @@
 # grunt-text-grab
 
-> Grab and extract text chunks from files using regular expressions and save them to several formats.
+> Grab and extract text chunks from files using regular expressions and save as a single file formated by a user defined template.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -49,12 +49,6 @@ Default value: none
 
 An array of regular expressions, as strings, to exclude from the final output.
 
-#### options.exceptions
-Type: `Array`
-Default value: none
-
-An array of regular expressions, as strings, to exclude from the final output.
-
 #### options.templateStart
 Type: `String`
 Default value: none
@@ -65,7 +59,7 @@ A string that will be prepended to the output file. Can be empty.
 Type: `String`
 Default value: none
 
-This is the bit of the template that gets reapeated on each match. Must contain the ´%s´ symbol as the placeholder for grabbed chunks.
+This is the bit of the template that gets repeated on each match. Must contain the ´%s´ symbol as the placeholder for grabbed chunks.
 
 #### options.templateEnd
 Type: `String`
@@ -75,7 +69,7 @@ A string that will be appended to the output file. Can be empty.
 
 ### Usage Examples
 
-In this example we'll be extracting from `style.css` all css class selectors with the exception of any containing the `exception` expression and writing them as an html table with single selector per row.
+In this example we'll be extracting from `style.css` all CSS class selectors with the exception of any containing the `exception` expression and writing them as an HTML table with single selector per row.
 
 ```js
 grunt.initConfig({
@@ -95,7 +89,7 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 _(Nothing yet)_
