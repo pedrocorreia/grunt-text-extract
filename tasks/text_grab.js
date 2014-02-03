@@ -10,24 +10,18 @@
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
   grunt.registerMultiTask('text_grab', 'Grab text from files by using regular expressions and save them to any format.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
+
     var options = this.options({
-      pattern: '',
-      exceptions: '',
-      templateStart: '',
-      templateRow: '',
-      templateEnd: '',
+      pattern: undefined,
+      exceptions: undefined,
+      templateStart: undefined,
+      templateRow: undefined,
+      templateEnd: undefined,
     });
 
-    // Iterate over all specified file groups.
     this.files.forEach(function(f) {
-      // Concat specified files.
       var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
         if ( !grunt.file.exists(filepath) ) {
           grunt.log.warn('Source file "' + filepath + '" not found.');
           return false;
@@ -35,7 +29,6 @@ module.exports = function(grunt) {
           return true;
         }
       }).map(function(filepath) {
-        // Read file source.
         return grunt.file.read(filepath);
       }).join(grunt.util.normalizelf(options.pattern));
 
@@ -50,17 +43,24 @@ module.exports = function(grunt) {
           return self.indexOf(elem) === pos;
       });
 
-      for ( var i=0; i < chunks.length; i++ ) {
-        flagexception = 0;
-        for ( var x=0; x < options.exceptions.length; x++ ) {
-          var exception = new RegExp(options.exceptions[x],'g');
-          if ( chunks[i].match(exception) !== null ) {
-            flagexception++;
+      grunt.log.writeln('Grabbed ' + chunks.length + ' unique chunks of text.');
+
+      if(options.exceptions){        
+        for ( var i=0; i < chunks.length; i++ ) {
+          flagexception = 0;
+          for ( var x=0; x < options.exceptions.length; x++ ) {
+            var exception = new RegExp(options.exceptions[x],'g');
+            if ( chunks[i].match(exception) !== null ) {
+              flagexception++;
+            } 
+          }
+          if ( flagexception === 0 ) {
+            validChunks.push(chunks[i]);
           } 
         }
-        if ( flagexception === 0 ) {
-          validChunks.push(chunks[i]);
-        } 
+        grunt.log.writeln('Removed ' + ( chunks.length - validChunks.length )  + ' chunks based on your exceptions.');
+      } else {
+        validChunks = chunks;
       }
 
       if(options.templateStart) {        
@@ -75,10 +75,7 @@ module.exports = function(grunt) {
         output += options.templateEnd;
       }
 
-      // Write the destination file.
       grunt.file.write(f.dest, output);
-
-      // Print a success message.
       grunt.log.writeln('File "' + f.dest + '" created.');
     });
   });
