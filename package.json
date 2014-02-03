@@ -1,7 +1,7 @@
 {
   "name": "grunt-text-grab",
   "description": "Extract chunks of text from files using regular expressions and save them to multiple formats.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/pedrocorreia/grunt-text-grab",
   "author": {
     "name": "Pedro Correia",
